@@ -42,6 +42,17 @@ task javadocJar(type: Jar) {
 }
 
 
+tasks.withType(Javadoc) {
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
 publishing {
     // 定义发布什么
     publications {
@@ -98,11 +109,4 @@ publishing {
 
 signing {
     sign publishing.publications.mavenJava
-}
-
-
-javadoc {
-    // <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    // 防止本地打开中文乱码
-    options.addStringOption("charset", "UTF-8")
 }
