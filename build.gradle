@@ -25,3 +25,84 @@ tasks.withType(JavaCompile) {
 task halo() {
     println "halo! im vinson!"
 }
+
+//发布配置
+apply from: '.gradle/publish.gradle'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    classifier = 'javadoc'
+}
+
+
+publishing {
+    // 定义发布什么
+    publications {
+        mavenJava(MavenPublication) {
+            // groupId = project.group
+            // artifactId = project.name
+            // version = project.version
+            // groupId,artifactId,version，如果不定义，则会按照以上默认值执行
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom {
+                // 构件名称
+                // 区别于artifactId，可以理解为artifactName
+                name = 'Smart Data'
+                // 构件描述
+                description = 'Make your data more flexible'
+                // 构件主页
+                url = 'https://open.source.lauvinson.com'
+                // 许可证
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                // 开发者
+                developers {
+                    developer {
+                        name = 'lauvinson'
+                        email = 'wincentlauvinson@gmail.com'
+                    }
+                }
+                // 版本控制仓库地址
+                scm {
+                    url = 'https://github.com/lauvinson/smart-data'
+                    connection = 'scm:git:git://github.com/lauvinson/smart-data.git'
+                    developerConnection = 'scm:git:ssh://git@github.com:lauvinson/smart-data.git'
+                }
+            }
+        }
+    }
+    // 定义发布位置
+    repositories {
+        maven {
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            credentials {
+                username sonatypeUsername
+                password sonatypePassword
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+
+javadoc {
+    // <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    // 防止本地打开中文乱码
+    options.addStringOption("charset", "UTF-8")
+}
