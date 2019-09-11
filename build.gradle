@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.lauvinson.source.open'
-version '1.0.0'
+version '1.0.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
@@ -49,18 +49,16 @@ tasks.withType(Javadoc) {
 }
 
 artifacts {
-    archives sourcesJar
-    archives javadocJar
+    archives javadocJar, sourcesJar
 }
 
 publishing {
     // 定义发布什么
     publications {
         mavenJava(MavenPublication) {
-            // groupId = project.group
-            // artifactId = project.name
-            // version = project.version
-            // groupId,artifactId,version，如果不定义，则会按照以上默认值执行
+            groupId = project.group
+            artifactId = project.name
+            version = project.version
             from components.java
             artifact sourcesJar
             artifact javadocJar
@@ -95,10 +93,17 @@ publishing {
             }
         }
     }
-    // 定义发布位置
+
     repositories {
+//        maven {
+//            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+//            credentials {
+//                username sonatypeUsername
+//                password sonatypePassword
+//            }
+//        }
         maven {
-            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            url "https://oss.sonatype.org/content/repositories/snapshots"
             credentials {
                 username sonatypeUsername
                 password sonatypePassword
