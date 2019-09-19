@@ -16,7 +16,7 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
       
-on: [tag]
+on: [release]
 jobs:
   build:
     runs-on: ubuntu-latest

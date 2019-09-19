@@ -1,7 +1,12 @@
 ### Smart Data
-> 构建更加灵活的数据工具
+更加灵活的构建数据
+
+[![](https://img.shields.io/badge/build-gradle-green)](https://gradle.org)  [![](https://img.shields.io/badge/power-lauvinson.com-orange)](https://www.lauvinson.com)
+---
+
+#### CI STATUS
+![](https://github.com/lauvinson/smart-data/workflows/.github/workflows/gradle.yml/badge.svg)
 
 ---
-[![](https://img.shields.io/badge/build-gradle-green)](https://www.lauvinson.com)
 #### LISENCE
 [Apache 2.0](https://github.com/lauvinson/smart-data/blob/master/LISENCE)
