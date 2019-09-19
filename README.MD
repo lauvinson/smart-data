@@ -5,7 +5,7 @@
 ---
 
 #### CI STATUS
-![](https://github.com/lauvinson/smart-data/workflows/.github/workflows/gradle.yml/badge.svg)
+![](https://github.com/lauvinson/smart-data/workflows/Java%20CI/badge.svg)
 
 ---
 #### LISENCE
