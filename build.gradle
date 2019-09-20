@@ -26,11 +26,6 @@ task halo() {
     println "halo! im vinson!"
 }
 
-//发布配置
-apply from: '.gradle/publish.gradle'
-apply plugin: 'maven-publish'
-apply plugin: 'signing'
-
 task sourcesJar(type: Jar) {
     from sourceSets.main.allJava
     classifier = 'sources'
@@ -52,66 +47,77 @@ artifacts {
     archives javadocJar, sourcesJar
 }
 
-publishing {
-    // 定义发布什么
-    publications {
-        mavenJava(MavenPublication) {
-            groupId = project.group
-            artifactId = project.name
-            version = project.version
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-            pom {
-                // 构件名称
-                // 区别于artifactId，可以理解为artifactName
-                name = 'Smart Data'
-                // 构件描述
-                description = 'Make your data more flexible'
-                // 构件主页
-                url = 'https://open.source.lauvinson.com'
-                // 许可证
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                // 开发者
-                developers {
-                    developer {
-                        name = 'lauvinson'
-                        email = 'wincentlauvinson@gmail.com'
-                    }
-                }
-                // 版本控制仓库地址
-                scm {
-                    url = 'https://github.com/lauvinson/smart-data'
-                    connection = 'scm:git:git://github.com/lauvinson/smart-data.git'
-                    developerConnection = 'scm:git:ssh://git@github.com:lauvinson/smart-data.git'
-                }
-            }
-        }
-    }
-
-    repositories {
+/*
+ * 发布时 BEGIN
+ */
+//publishing {
+//    //发布配置
+//    apply from: '.gradle/publish.gradle'
+//    apply plugin: 'maven-publish'
+//    apply plugin: 'signing'
+//    // 定义发布什么
+//    publications {
+//        mavenJava(MavenPublication) {
+//            groupId = project.group
+//            artifactId = project.name
+//            version = project.version
+//            from components.java
+//            artifact sourcesJar
+//            artifact javadocJar
+//            pom {
+//                // 构件名称
+//                // 区别于artifactId，可以理解为artifactName
+//                name = 'Smart Data'
+//                // 构件描述
+//                description = 'Make your data more flexible'
+//                // 构件主页
+//                url = 'https://open.source.lauvinson.com'
+//                // 许可证
+//                licenses {
+//                    license {
+//                        name = 'The Apache License, Version 2.0'
+//                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                    }
+//                }
+//                // 开发者
+//                developers {
+//                    developer {
+//                        name = 'lauvinson'
+//                        email = 'wincentlauvinson@gmail.com'
+//                    }
+//                }
+//                // 版本控制仓库地址
+//                scm {
+//                    url = 'https://github.com/lauvinson/smart-data'
+//                    connection = 'scm:git:git://github.com/lauvinson/smart-data.git'
+//                    developerConnection = 'scm:git:ssh://git@github.com:lauvinson/smart-data.git'
+//                }
+//            }
+//        }
+//    }
+//
+//    repositories {
+////        maven {
+////            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+////            credentials {
+////                username sonatypeUsername
+////                password sonatypePassword
+////            }
+////        }
 //        maven {
-//            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+//            url "https://oss.sonatype.org/content/repositories/snapshots"
 //            credentials {
 //                username sonatypeUsername
 //                password sonatypePassword
 //            }
 //        }
-        maven {
-            url "https://oss.sonatype.org/content/repositories/snapshots"
-            credentials {
-                username sonatypeUsername
-                password sonatypePassword
-            }
-        }
-    }
-}
+//    }
+//}
 
-signing {
-    sign publishing.publications.mavenJava
-}
+//signing {
+//    sign publishing.publications.mavenJava
+//}
+
+/*
+ * END
+ */
