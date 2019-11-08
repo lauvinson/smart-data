@@ -77,8 +77,6 @@ public class Export<T> {
         }
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet(title);
-        //设置自动公式填充
-        sheet.setForceFormulaRecalculation(true);
         sheet.setDefaultColumnWidth(20);
         XSSFCellStyle style = workbook.createCellStyle();
         style.setFillForegroundColor(XSSFColor.toXSSFColor(HSSFColor.HSSFColorPredefined.GREY_50_PERCENT.getColor()));
@@ -139,6 +137,9 @@ public class Export<T> {
                     tCls = t.getClass();
                     getMethod = tCls.getMethod(methods[i]);
                     value = getMethod.invoke(t);
+                    fieldName = getMethod.getName().replace("get", "");
+                    fieldName = fieldName.substring(0, 1).toLowerCase()
+                            + fieldName.substring(1);
                     textValue = null;
                     if (value instanceof Integer) {
                         cell.setCellValue((Integer) value);
@@ -171,6 +172,15 @@ public class Export<T> {
                             textValue = value.toString();
                         }
                     }
+                    //如果属性标注了公式注解，尝试使用公式填充
+                    try {
+                        if (tCls.getDeclaredField(fieldName).isAnnotationPresent(FormulaValue.class)) {
+                            cell.setCellFormula(textValue);
+                            continue;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     if (textValue != null) {
                         matcher = p.matcher(textValue);
                         if (matcher.matches()) {
@@ -186,6 +196,8 @@ public class Export<T> {
             }
         }
         try {
+            //设置自动公式填充
+            sheet.setForceFormulaRecalculation(true);
             workbook.write(out);
         } catch (IOException e) {
             e.printStackTrace();
