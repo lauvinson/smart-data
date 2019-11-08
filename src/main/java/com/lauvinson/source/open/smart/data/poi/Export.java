@@ -77,6 +77,8 @@ public class Export<T> {
         }
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet(title);
+        //设置自动公式填充
+        sheet.setForceFormulaRecalculation(true);
         sheet.setDefaultColumnWidth(20);
         XSSFCellStyle style = workbook.createCellStyle();
         style.setFillForegroundColor(XSSFColor.toXSSFColor(HSSFColor.HSSFColorPredefined.GREY_50_PERCENT.getColor()));
